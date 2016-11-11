@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Yaroslav
- * Date: 10.11.2016
- * Time: 20:31
- */
-
 
 namespace Elevator;
 
@@ -79,6 +72,7 @@ class Elevator extends Building
     private function stopElevator($currentFloor)
     {
         $this->openDoor();
+
         return "Elevator arrives on $currentFloor floor";
     }
 

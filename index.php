@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Yaroslav
- * Date: 07.11.2016
- * Time: 18:03
- */
 
 require_once "src/Building.php";
 
@@ -16,6 +10,6 @@ $floor = 1;
 $direction = true;
 $door = false;
 $active = true;
+$queue = array_push(4, 5, 6, 8);
 
-
-var_dump($test->callElevator($currentFloor, $floor, $direction, $active, $door));
+var_dump($test->callElevator($currentFloor, $floor, $direction, $active, $door, $queue));

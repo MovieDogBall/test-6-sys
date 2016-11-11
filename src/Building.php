@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Yaroslav
- * Date: 10.11.2016
- * Time: 22:55
- */
-
 
 namespace Building;
 
@@ -19,7 +12,6 @@ use Elevator\Elevator as Elevator;
  */
 class Building
 {
-
     /**
      * @param $currentFloor
      * @param $floor
@@ -28,11 +20,9 @@ class Building
      * @param $door
      * @return string
      */
-    public function callElevator($currentFloor, $floor, $direction, $active, $door)
+    public function callElevator($currentFloor, $floor, $direction, $active, $door, $queue)
     {
         $Elevator = new Elevator();
-
-        $queue = array(4, 5, 7, 3);
 
         $floors = $Elevator->addToQueue($floor, $queue);
 
@@ -47,6 +37,10 @@ class Building
                         break;
                     case $currentFloor == $floor:
                         $door = $this->openDoor();
+                        break;
+                    default:
+                        $active = true;
+                        break;
                 }
             }
 
