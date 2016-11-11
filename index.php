@@ -6,7 +6,7 @@
  * Time: 18:03
  */
 
-require_once "work/Building.php";
+require_once "src/Building.php";
 
 use Building\Building as Building;
 
