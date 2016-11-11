@@ -13,6 +13,10 @@ require_once "Building.php";
 
 use Building\Building;
 
+interface ElevatorFunc
+{
+    public function moveElevator();
+}
 
 /**
  * Class Elevator
@@ -29,48 +33,32 @@ class Elevator extends Building
      * @param $door
      * @param $direction
      * @return string
+     *
+     * Move Elevator
+     *
      */
     public function moveElevator($currentFloor, $floors, $door, $direction)
     {
         if ($door === false) {
             if ($direction === true) {
                 sort($floors);
+                $floors = $this->moveUp($floors, $currentFloor, $direction);
 
-                foreach ($floors as $key => $floor) {
-                    if ($floor > $currentFloor) {
-                        while ($currentFloor != $floor) {
-                            $currentFloor = $this->moveToNextFloor($currentFloor, $direction);
-                        }
-                    }
+                if (!empty($floors)) {
+                    $direction = $this->changeDirection($direction);
 
-                    if ($floor == $currentFloor) {
-                        $msg = $this->stopElevator($currentFloor);
-                        var_dump($msg);
-                        $key = array_search($floor, $floors);
-                        unset($floors[$key]);
-
-                        $this->closeDoor();
-                    }
+                    $this->moveDown($floors, $currentFloor, $direction);
                 }
+
             } else {
                 rsort($floors);
 
-                foreach ($floors as $key => $floor) {
-                    if ($floor < $currentFloor) {
-                        while ($currentFloor != $floor) {
-                            $currentFloor = $this->moveToNextFloor($currentFloor, $direction);
-                        }
-                    }
+                $floors = $this->moveDown($floors, $currentFloor, $direction);
 
-                    if ($floor == $currentFloor) {
-                        $msg = $this->stopElevator($currentFloor);
-                        var_dump($msg);
+                if (!empty($floors)) {
+                    $direction = $this->changeDirection($direction);
 
-                        $key = array_search($floor, $floors);
-                        unset($floors[$key]);
-
-                        $this->closeDoor();
-                    }
+                    $this->moveUp($floors, $currentFloor, $direction);
                 }
             }
 
@@ -84,6 +72,9 @@ class Elevator extends Building
     /**
      * @param $currentFloor
      * @return string
+     *
+     * Stop Elevator
+     *
      */
     private function stopElevator($currentFloor)
     {
@@ -95,6 +86,9 @@ class Elevator extends Building
      * @param $currentFloor
      * @param $direction
      * @return mixed
+     *
+     * Move Elevator to next Floor
+     *
      */
     private function moveToNextFloor($currentFloor, $direction)
     {
@@ -109,6 +103,9 @@ class Elevator extends Building
      * @param $floor
      * @param $queue
      * @return mixed
+     *
+     * Add chosen floor to Queue
+     *
      */
     public function addToQueue($floor, $queue)
     {
@@ -118,6 +115,79 @@ class Elevator extends Building
         }
 
         return $queue;
+    }
+
+    /**
+     * @param $direction
+     * @return bool
+     *
+     * Change direction
+     *
+     */
+    private function changeDirection($direction)
+    {
+        return $direction === true ? false : true;
+    }
+
+    /**
+     * @param $floors
+     * @param $currentFloor
+     * @param $direction
+     * @return mixed
+     *
+     * Elevator goes Up
+     */
+    private function moveUp($floors, $currentFloor, $direction)
+    {
+        foreach ($floors as $key => $floor) {
+            if ($floor > $currentFloor) {
+                while ($currentFloor != $floor) {
+                    $currentFloor = $this->moveToNextFloor($currentFloor, $direction);
+                }
+            }
+
+            if ($floor == $currentFloor) {
+                $msg = $this->stopElevator($currentFloor);
+                var_dump($msg);
+                $key = array_search($floor, $floors);
+                unset($floors[$key]);
+
+                $this->closeDoor();
+            }
+        }
+
+        return $floors;
+    }
+
+    /**
+     * @param $floors
+     * @param $currentFloor
+     * @param $direction
+     * @return mixed
+     *
+     * Elevator goes down
+     */
+    private function moveDown($floors, $currentFloor, $direction)
+    {
+        foreach ($floors as $key => $floor) {
+            if ($floor < $currentFloor) {
+                while ($currentFloor != $floor) {
+                    $currentFloor = $this->moveToNextFloor($currentFloor, $direction);
+                }
+            }
+
+            if ($floor == $currentFloor) {
+                $msg = $this->stopElevator($currentFloor);
+                var_dump($msg);
+
+                $key = array_search($floor, $floors);
+                unset($floors[$key]);
+
+                $this->closeDoor();
+            }
+        }
+
+        return $floors;
     }
 
 }
