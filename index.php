@@ -11,9 +11,9 @@ require_once "src/Building.php";
 use Building\Building as Building;
 
 $test = new Building();
-$currentFloor = 4;
+$currentFloor = 2;
 $floor = 1;
-$direction = false;
+$direction = true;
 $door = false;
 $active = true;
 

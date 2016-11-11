@@ -45,11 +45,10 @@ class Elevator extends Building
 
                     if ($floor == $currentFloor) {
                         $msg = $this->stopElevator($currentFloor);
-
+                        var_dump($msg);
                         $key = array_search($floor, $floors);
                         unset($floors[$key]);
 
-                        sleep(5);
                         $this->closeDoor();
                     }
                 }
@@ -65,8 +64,12 @@ class Elevator extends Building
 
                     if ($floor == $currentFloor) {
                         $msg = $this->stopElevator($currentFloor);
+                        var_dump($msg);
+
                         $key = array_search($floor, $floors);
                         unset($floors[$key]);
+
+                        $this->closeDoor();
                     }
                 }
             }
@@ -104,27 +107,17 @@ class Elevator extends Building
 
     /**
      * @param $floor
-     * @return mixed
-     */
-    public function addToQueue($floor)
-    {
-        return array_push($this->queue, $floor);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getQueue()
-    {
-        return $this->queue;
-    }
-
-    /**
      * @param $queue
+     * @return mixed
      */
-    public function setQueue($queue)
+    public function addToQueue($floor, $queue)
     {
-        $this->queue = $queue;
+
+        if (!in_array($floor, $queue)) {
+            array_push($queue, $floor);
+        }
+
+        return $queue;
     }
 
 }

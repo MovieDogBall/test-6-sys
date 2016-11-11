@@ -20,11 +20,21 @@ use Elevator\Elevator as Elevator;
 class Building
 {
 
+    /**
+     * @param $currentFloor
+     * @param $floor
+     * @param $direction
+     * @param $active
+     * @param $door
+     * @return string
+     */
     public function callElevator($currentFloor, $floor, $direction, $active, $door)
     {
         $Elevator = new Elevator();
 
-        $floors = $Elevator->addToQueue($floor);
+        $queue = array(4, 5, 7, 3);
+
+        $floors = $Elevator->addToQueue($floor, $queue);
 
         if ($active === false && count($floors) == 1) {
             foreach ($floors as $floor) {
@@ -40,6 +50,7 @@ class Building
                 }
             }
 
+            $this->closeDoor();
             $msg = $Elevator->moveElevator($currentFloor, $floors, $door, $direction);
         }
 
@@ -48,13 +59,20 @@ class Building
         return $msg;
     }
 
+    /**
+     * @return bool
+     */
     protected function openDoor()
     {
         return true;
     }
 
+    /**
+     * @return bool
+     */
     protected function closeDoor()
     {
+        sleep(5);
         return false;
     }
 }
