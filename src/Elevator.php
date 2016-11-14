@@ -33,7 +33,7 @@ class Elevator extends Building
     public function moveElevator($currentFloor, $floors, $door, $direction)
     {
         if ($door === false) {
-            if ($direction === true) {
+            if ($direction == "up") {
                 sort($floors);
                 $floors = $this->moveUp($floors, $currentFloor, $direction);
 
@@ -86,7 +86,7 @@ class Elevator extends Building
      */
     private function moveToNextFloor($currentFloor, $direction)
     {
-        if ($direction === true) {
+        if ($direction == "up") {
             return $currentFloor + 1;
         } else {
             return $currentFloor - 1;
@@ -120,7 +120,7 @@ class Elevator extends Building
      */
     private function changeDirection($direction)
     {
-        return $direction === true ? false : true;
+        return $direction === "up" ? "down" : "up";
     }
 
     /**

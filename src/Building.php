@@ -30,10 +30,10 @@ class Building
             foreach ($floors as $floor) {
                 switch ($floor) {
                     case $currentFloor > $floor:
-                        $direction = false;
+                        $direction = "down";
                         break;
                     case $currentFloor < $floor:
-                        $direction = true;
+                        $direction = "up";
                         break;
                     case $currentFloor == $floor:
                         $door = $this->openDoor();
