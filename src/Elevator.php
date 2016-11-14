@@ -55,10 +55,10 @@ class Elevator extends Building
             }
 
 
-            return "Elevator arrives on last floor";
+            return "Elevator arrives on last floor <br />";
 
         } else {
-            return "Waiting  for closing door";
+            return "Waiting  for closing door <br />";
         }
     }
 
@@ -70,7 +70,7 @@ class Elevator extends Building
      */
     private function stopElevator($currentFloor)
     {
-        print_r("Elevator arrives on $currentFloor floor");
+        print_r("Elevator arrives on $currentFloor floor <br />");
         $this->openDoor();
     }
 
@@ -112,18 +112,6 @@ class Elevator extends Building
     }
 
     /**
-     * @param $direction
-     * @return bool
-     *
-     * Change direction
-     *
-     */
-    private function changeDirection($direction)
-    {
-        return $direction === "up" ? "down" : "up";
-    }
-
-    /**
      * @param $floors
      * @param $currentFloor
      * @return array
@@ -162,9 +150,7 @@ class Elevator extends Building
             }
 
             $this->stopElevator($currentFloor);
-
             unset($floors[$key]);
-
             $this->closeDoor();
 
         }
