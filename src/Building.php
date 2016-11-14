@@ -66,7 +66,6 @@ class Building
      */
     protected function closeDoor()
     {
-        sleep(5);
         return false;
     }
 }
