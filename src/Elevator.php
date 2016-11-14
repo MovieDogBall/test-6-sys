@@ -55,7 +55,7 @@ class Elevator extends Building
             }
 
 
-            return "Elevator arrives on last floor <br />";
+            return "Elevator arrived on last floor <br />";
 
         } else {
             return "Waiting  for closing door <br />";
@@ -85,10 +85,10 @@ class Elevator extends Building
     private function moveToNextFloor($currentFloor, $direction)
     {
         if ($direction == "up") {
-            print_r("Elevator move to up <br />");
+            print_r("Elevator move to $currentFloor floor <br />");
             return $currentFloor + 1;
         } else {
-            print_r("Elevator move to down <br />");
+            print_r("Elevator move to $currentFloor floor <br />");
             return $currentFloor - 1;
         }
     }
