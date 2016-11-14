@@ -87,7 +87,7 @@ class Elevator extends Building
     /**
      * @param $requestFloor
      * @param $queue
-     * @return mixed
+     * @return array
      */
     public function addToQueue($requestFloor, $queue)
     {
