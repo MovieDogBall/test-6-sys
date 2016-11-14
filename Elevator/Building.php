@@ -1,10 +1,6 @@
 <?php
 
-namespace Building;
-
-require_once "Elevator.php";
-
-use Elevator\Elevator as Elevator;
+namespace Elevator;
 
 /**
  * Class Building
@@ -26,10 +22,11 @@ class Building
     {
 
         $elevator = new Elevator();
+        $elevator->addObserver(new Logger());
 
         $floors = $elevator->addToQueue($requestFloor, $queue);
 
-        $this->closeDoor();
+        $elevator->closeDoor();
         $elevator->setFloors($floors);
         $elevator->setDirection($direction);
         $elevator->setCurrentFloor($currentFloor);
@@ -65,19 +62,4 @@ class Building
         //return $msg;
     }
 
-    /**
-     * @return bool
-     */
-    protected function openDoor()
-    {
-        return true;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function closeDoor()
-    {
-        return false;
-    }
 }

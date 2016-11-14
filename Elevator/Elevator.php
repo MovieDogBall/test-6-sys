@@ -2,16 +2,11 @@
 
 namespace Elevator;
 
-require_once "Building.php";
-
-use Building\Building;
-
-
 /**
  * Class Elevator
  * @package Elevator
  */
-class Elevator extends Building
+class Elevator  implements IObservable
 {
 
     const DIRECTION_UP = 'up';
@@ -20,6 +15,8 @@ class Elevator extends Building
     public $floors = [];
     public $direction = '';
     public $currentFloor = 1;
+    /** @var IObserver */
+    private $objObserver;
     /**
      * @param $door
      * @return string
@@ -39,23 +36,20 @@ class Elevator extends Building
                     if (!empty($this->floors)) {
                         $this->setDirection(Elevator::DIRECTION_DOWN);
                     }
-
                 }
 
                 if ($this->direction == Elevator::DIRECTION_DOWN) {
                     rsort($this->floors);
-
                     $this->moveToDefinedDirection();
-                    var_dump($this->floors);exit();
+
                     if (!empty($this->floors)) {
                         $this->setDirection(Elevator::DIRECTION_UP);
                     }
                 }
             }
-
-            print_r("Elevator arrived on last floor <br />");
+            $this->fireEvent("Elevator arrived on last floor");
         } else {
-            print_r("Waiting  for closing door <br />");
+            $this->fireEvent("Waiting  for closing door");
         }
     }
 
@@ -64,7 +58,7 @@ class Elevator extends Building
      */
     private function stopElevator()
     {
-        print_r("Elevator arrived on $this->currentFloor floor <br />");
+        $this->fireEvent("arrivedTo");
         $this->openDoor();
     }
 
@@ -75,13 +69,12 @@ class Elevator extends Building
     private function moveToNextFloor()
     {
         if ($this->direction == Elevator::DIRECTION_UP) {
-            print_r("Elevator move to $this->currentFloor floor <br />");
             $this->currentFloor++;
         }
         if ($this->direction == Elevator::DIRECTION_DOWN) {
-            print_r("Elevator move to $this->currentFloor floor <br />");
             --$this->currentFloor;
         }
+        $this->fireEvent("movedTo");
     }
 
     /**
@@ -174,4 +167,37 @@ class Elevator extends Building
         $this->closeDoor();
     }
 
+    /**
+     * @return bool
+     */
+    protected function openDoor()
+    {
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function closeDoor()
+    {
+        return false;
+    }
+
+    /**
+     * @param IObserver $objObserver
+     * @return void
+     */
+    public function addObserver(IObserver $objObserver)
+    {
+        $this->objObserver = $objObserver;
+    }
+
+    /**
+     * @param $strEventType
+     * @return mixed
+     */
+    public function fireEvent($strEventType)
+    {
+        $this->objObserver->notify( $this, $strEventType );
+    }
 }

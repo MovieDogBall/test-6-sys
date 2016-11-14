@@ -1,8 +1,9 @@
 <?php
+set_include_path('Elevator');
+spl_autoload_extensions(".php");
+spl_autoload_register();
 
-require_once "src/Building.php";
-
-use Building\Building as Building;
+use Elevator\Building as Building;
 
 $test = new Building();
 $currentFloor = 2; //Этаж где лифт
