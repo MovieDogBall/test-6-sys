@@ -70,7 +70,7 @@ class Elevator extends Building
      */
     private function stopElevator($currentFloor)
     {
-        print_r("Elevator arrives on $currentFloor floor <br />");
+        print_r("Elevator arrived on $currentFloor floor <br />");
         $this->openDoor();
     }
 
