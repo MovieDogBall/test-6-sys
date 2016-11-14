@@ -34,21 +34,21 @@ class Elevator extends Building
     {
         if ($door === false) {
             if ($direction == "up") {
-                sort($floors);
+                sort($floors); // Why did you do this sorting?
                 $floors = $this->moveUp($floors, $currentFloor, $direction);
 
-                if (!empty($floors)) {
+                if (!empty($floors)) { // for what this validation maybe it have sence move it upper on line 40
                     $direction = $this->changeDirection($direction);
 
                     $this->moveDown($floors, $currentFloor, $direction);
                 }
 
             } else {
-                rsort($floors);
+                rsort($floors); // Why did you do this sorting?
 
                 $floors = $this->moveDown($floors, $currentFloor, $direction);
 
-                if (!empty($floors)) {
+                if (!empty($floors)) { // the same
                     $direction = $this->changeDirection($direction);
 
                     $this->moveUp($floors, $currentFloor, $direction);
