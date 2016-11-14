@@ -58,7 +58,7 @@ class Elevator extends Building
             return "Elevator arrives on last floor";
 
         } else {
-            return "Waiting for closing door";
+            return "Waiting  for closing door";
         }
     }
 
