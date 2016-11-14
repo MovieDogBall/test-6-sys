@@ -18,8 +18,7 @@ interface ElevatorFunc
 class Elevator extends Building
 {
 
-    public $queue;
-
+    public $floors, $direction, $currentFloor;
     /**
      * @param $currentFloor
      * @param $floors
@@ -30,6 +29,7 @@ class Elevator extends Building
      * Move Elevator
      *
      */
+
     public function moveElevator($currentFloor, $floors, $door, $direction)
     {
         if ($door === false) {
@@ -43,6 +43,7 @@ class Elevator extends Building
                     }
 
                 }
+
                 if ($direction = "down") {
                     rsort($floors);
 
@@ -87,25 +88,23 @@ class Elevator extends Building
         if ($direction == "up") {
             print_r("Elevator move to $currentFloor floor <br />");
             return $currentFloor + 1;
-        } else {
+        }
+        if ($direction == "down") {
             print_r("Elevator move to $currentFloor floor <br />");
             return $currentFloor - 1;
         }
     }
 
     /**
-     * @param $floor
+     * @param $requestFloor
      * @param $queue
      * @return mixed
-     *
-     * Add chosen floor to Queue
-     *
      */
-    public function addToQueue($floor, $queue)
+    public function addToQueue($requestFloor, $queue)
     {
 
-        if (!in_array($floor, $queue)) {
-            array_push($queue, $floor);
+        if (!in_array($requestFloor, $queue)) {
+            array_push($queue, $requestFloor);
         }
 
         return $queue;
@@ -123,11 +122,11 @@ class Elevator extends Building
                 while ($currentFloor != $floor) {
                     $currentFloor = $this->moveToNextFloor($currentFloor, "up");
                 }
-            }
 
-            $this->stopElevator($currentFloor);
-            unset($floors[$key]);
-            $this->closeDoor();
+                $this->stopElevator($currentFloor);
+                unset($floors[$key]);
+                $this->closeDoor();
+            }
         }
 
         return $floors;
@@ -144,15 +143,15 @@ class Elevator extends Building
     {
         foreach ($floors as $key => $floor) {
             if ($floor < $currentFloor) {
+                var_dump($currentFloor);
                 while ($currentFloor != $floor) {
                     $currentFloor = $this->moveToNextFloor($currentFloor, "down");
                 }
+
+                $this->stopElevator($currentFloor);
+                unset($floors[$key]);
+                $this->closeDoor();
             }
-
-            $this->stopElevator($currentFloor);
-            unset($floors[$key]);
-            $this->closeDoor();
-
         }
 
         return $floors;

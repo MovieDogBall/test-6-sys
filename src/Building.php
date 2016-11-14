@@ -14,17 +14,19 @@ class Building
 {
     /**
      * @param $currentFloor
-     * @param $floor
+     * @param $requestFloor
      * @param $direction
      * @param $active
      * @param $door
+     * @param $queue
+     * 
      * @return string
      */
-    public function callElevator($currentFloor, $floor, $direction, $active, $door, $queue)
+    public function callElevator($currentFloor, $requestFloor, $direction, $active, $door, $queue)
     {
         $Elevator = new Elevator();
 
-        $floors = $Elevator->addToQueue($floor, $queue);
+        $floors = $Elevator->addToQueue($requestFloor, $queue);
 
         if ($active === false && count($floors) == 1) {
             foreach ($floors as $floor) {
