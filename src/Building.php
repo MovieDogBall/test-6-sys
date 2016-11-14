@@ -24,11 +24,18 @@ class Building
      */
     public function callElevator($currentFloor, $requestFloor, $direction, $active, $door, $queue)
     {
-        $Elevator = new Elevator();
 
-        $floors = $Elevator->addToQueue($requestFloor, $queue);
+        $elevator = new Elevator();
 
-        if ($active === false && count($floors) == 1) {
+        $floors = $elevator->addToQueue($requestFloor, $queue);
+
+        $this->closeDoor();
+        $elevator->setFloors($floors);
+        $elevator->setDirection($direction);
+        $elevator->setCurrentFloor($currentFloor);
+        $elevator->moveElevator($door);
+
+        /*if ($active === false && count($floors) == 1) {
             foreach ($floors as $floor) {
                 switch ($floor) {
                     case $currentFloor > $floor:
@@ -47,12 +54,15 @@ class Building
             }
 
             $this->closeDoor();
-            $msg = $Elevator->moveElevator($currentFloor, $floors, $door, $direction);
+            $elevator->setFloors($floors);
+            $elevator->setDirection($direction);
+            $elevator->setCurrentFloor($currentFloor);
+            $elevator->moveElevator($door);
         }
 
-        $msg = $Elevator->moveElevator($currentFloor, $floors, $door, $direction);
+        $msg = $elevator->moveElevator($door);*/
 
-        return $msg;
+        //return $msg;
     }
 
     /**
