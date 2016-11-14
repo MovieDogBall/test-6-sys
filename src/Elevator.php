@@ -38,7 +38,7 @@ class Elevator extends Building
                     sort($floors);
                     $floors = $this->moveUp($floors, $currentFloor);
 
-                    if (empty($floors)) {
+                    if (!empty($floors)) {
                         $direction = "down";
                     }
 
@@ -48,7 +48,7 @@ class Elevator extends Building
 
                     $floors = $this->moveDown($floors, $currentFloor);
 
-                    if (empty($floors)) {
+                    if (!empty($floors)) {
                         $direction = "up";
                     }
                 }
@@ -85,10 +85,10 @@ class Elevator extends Building
     private function moveToNextFloor($currentFloor, $direction)
     {
         if ($direction == "up") {
-            print_r("Elevator move to up");
+            print_r("Elevator move to up <br />");
             return $currentFloor + 1;
         } else {
-            print_r("Elevator move to down");
+            print_r("Elevator move to down <br />");
             return $currentFloor - 1;
         }
     }
