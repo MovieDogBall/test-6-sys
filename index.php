@@ -1,4 +1,11 @@
 <?php
+
+/**
+ *
+ * This file needs only for test
+ *
+ */
+
 set_include_path('Elevator');
 spl_autoload_extensions(".php");
 spl_autoload_register();
@@ -6,11 +13,10 @@ spl_autoload_register();
 use Elevator\Building as Building;
 
 $test = new Building();
-$currentFloor = 2; //Этаж где лифт
-$requestFloor = 2; //Этаж с которого вызвали
-$direction = "up"; //направление
-$door = false; //состояние двери
-$active = true; //лифт сейчас в движении
-$queue = array(1, 4, 5, 6, 8); //очередь из этажей по которым должен проехать лифт
+$currentFloor = 2; //Floor where elevator stay on this moment
+$requestFloor = 1; //Floor where somebody call elevator
+$direction = "up"; //Elevator direction on this moment
+$door = false; //Status door
+$queue = array(1, 7, 8); //Queue of the floors. You can add or remove floors, than testing elevator
 
-print_r($test->callElevator($currentFloor, $requestFloor, $direction, $active, $door, $queue));
+print_r($test->callElevator($currentFloor, $requestFloor, $direction, $door, $queue));

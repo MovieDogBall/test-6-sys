@@ -6,7 +6,7 @@ namespace Elevator;
  * Class Elevator
  * @package Elevator
  */
-class Elevator  implements IObservable
+class Elevator implements IObservable
 {
 
     const DIRECTION_UP = 'up';
@@ -17,6 +17,7 @@ class Elevator  implements IObservable
     public $currentFloor = 1;
     /** @var IObserver */
     private $objObserver;
+
     /**
      * @param $door
      * @return string
@@ -47,7 +48,7 @@ class Elevator  implements IObservable
                     }
                 }
             }
-            $this->fireEvent("Elevator arrived on last floor");
+            $this->fireEvent("Elevator stopped at last floor in queue");
         } else {
             $this->fireEvent("Waiting  for closing door");
         }
@@ -58,7 +59,7 @@ class Elevator  implements IObservable
      */
     private function stopElevator()
     {
-        $this->fireEvent("arrivedTo");
+        $this->fireEvent("stayOn");
         $this->openDoor();
     }
 
@@ -96,8 +97,9 @@ class Elevator  implements IObservable
         foreach ($this->floors as $key => $floor) {
             if ($floor > $this->currentFloor && $this->direction == Elevator::DIRECTION_UP) {
                 $this->run($floor, $key);
-            }elseif ($floor < $this->currentFloor && $this->direction == Elevator::DIRECTION_DOWN)
-            {
+            } elseif ($floor < $this->currentFloor && $this->direction == Elevator::DIRECTION_DOWN) {
+                $this->run($floor, $key);
+            } elseif ($floor == $this->currentFloor) {
                 $this->run($floor, $key);
             }
         }
@@ -162,7 +164,7 @@ class Elevator  implements IObservable
             $this->moveToNextFloor();
         }
 
-        $this->stopElevator($this->currentFloor);
+        $this->stopElevator();
         unset($this->floors[$key]);
         $this->closeDoor();
     }
@@ -170,7 +172,7 @@ class Elevator  implements IObservable
     /**
      * @return bool
      */
-    protected function openDoor()
+    public function openDoor()
     {
         return true;
     }
@@ -194,10 +196,9 @@ class Elevator  implements IObservable
 
     /**
      * @param $strEventType
-     * @return mixed
      */
     public function fireEvent($strEventType)
     {
-        $this->objObserver->notify( $this, $strEventType );
+        $this->objObserver->notify($this, $strEventType);
     }
 }

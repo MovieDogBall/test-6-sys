@@ -4,7 +4,7 @@ namespace Elevator;
 
 class Logger implements IObserver
 {
-    private $separator = "\r\n";
+    private $separator = "<br />";
 
     /**
      * @param IObservable $objSource
@@ -16,8 +16,8 @@ class Logger implements IObserver
         if($objArguments == 'movedTo'){
             printf( 'Elevator moved to: %s at floor: %s.'.$this->separator,
                 $objSource->getDirection(), $objSource->getCurrentFloor());
-        }elseif($objArguments == 'arrivedTo'){
-            printf( 'Elevator arrived at floor: %s.'.$this->separator,
+        }elseif($objArguments == 'stayOn'){
+            printf( 'Elevator stopped at floor: %s.'.$this->separator,
                 $objSource->getCurrentFloor());
         }else{
             print_r($objArguments.$this->separator);

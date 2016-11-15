@@ -12,13 +12,13 @@ class Building
      * @param $currentFloor
      * @param $requestFloor
      * @param $direction
-     * @param $active
      * @param $door
      * @param $queue
-     * 
-     * @return string
+     *
+     * Call elevator. This function calls when we push any button
+     *
      */
-    public function callElevator($currentFloor, $requestFloor, $direction, $active, $door, $queue)
+    public function callElevator($currentFloor, $requestFloor, $direction, $door, $queue)
     {
 
         $elevator = new Elevator();
@@ -26,40 +26,19 @@ class Building
 
         $floors = $elevator->addToQueue($requestFloor, $queue);
 
+        if (count($floors) == 1) {
+            if ($currentFloor > $requestFloor) {
+                $direction = "down";
+            } elseif ($currentFloor < $requestFloor) {
+                $direction = "up";
+            }
+        }
+
         $elevator->closeDoor();
         $elevator->setFloors($floors);
         $elevator->setDirection($direction);
         $elevator->setCurrentFloor($currentFloor);
         $elevator->moveElevator($door);
-
-        /*if ($active === false && count($floors) == 1) {
-            foreach ($floors as $floor) {
-                switch ($floor) {
-                    case $currentFloor > $floor:
-                        $direction = "down";
-                        break;
-                    case $currentFloor < $floor:
-                        $direction = "up";
-                        break;
-                    case $currentFloor == $floor:
-                        $door = $this->openDoor();
-                        break;
-                    default:
-                        $active = true;
-                        break;
-                }
-            }
-
-            $this->closeDoor();
-            $elevator->setFloors($floors);
-            $elevator->setDirection($direction);
-            $elevator->setCurrentFloor($currentFloor);
-            $elevator->moveElevator($door);
-        }
-
-        $msg = $elevator->moveElevator($door);*/
-
-        //return $msg;
     }
 
 }
